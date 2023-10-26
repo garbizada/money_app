@@ -13,6 +13,15 @@ class Despesa{
   }
 
 
+  validarDados(){
+    for(let i in this) {
+      if(this[i] == undefined || this[i] == '' || this[i] == null) {
+        return false
+      }
+    }
+    return true
+  }
+
 
 }
 
@@ -40,6 +49,26 @@ class Bd {
     localStorage.setItem('id',id)
   }
 
+  recuperarTodosRegistros(){
+
+    let despesas = Array()
+
+
+    let id = localStorage.getItem('id')
+
+    for(let i = 1; i <= id; i++){
+      
+      let despesa = JSON.parse(localStorage.getItem(i))
+
+      if (despesa === null) {
+        continue
+      }
+
+      despesas.push(despesa)
+    }
+    return despesas
+  }
+
 }
 
 let bd = new Bd()
@@ -59,5 +88,26 @@ function cadastrardespesa(){
   let despesa = new Despesa (ano.value, mes.value, dia.value, tipo.value,
      descricao.value, valor.value ) 
   
+
+  if(despesa.validarDados()){
+    bd.gravar(despesa)
+
+    $('#sucessoGravacao').modal('show')
+
+
+  }else {
+
+    $('#erroGravacao').modal('show')
+    
+  }
+  
   bd.gravar(despesa)
+}
+
+function carregaListaDespesas() {
+  let despesas = Array()
+
+  despesas = bd.recuperarTodosRegistros()
+
+  console.log(despesas)
 }
