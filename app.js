@@ -101,7 +101,6 @@ function cadastrardespesa(){
     
   }
   
-  bd.gravar(despesa)
 }
 
 function carregaListaDespesas() {
@@ -110,4 +109,35 @@ function carregaListaDespesas() {
   despesas = bd.recuperarTodosRegistros()
 
   console.log(despesas)
+
+  let listaDespesas = document.getElementById('lista_consulta_d')
+
+  despesas.forEach(function(d) {
+
+    let linha = lista_consulta_d.insertRow()
+
+    linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+  
+
+    switch(d.tipo) {
+      case '1': d.tipo = 'Alimentacao'
+        break
+      case '2': d.tipo = 'Educacao'
+        break
+      case '3': d.tipo = 'Lazer'
+        break
+      case '4': d.tipo = 'Saude'
+        break
+      case '5': d.tipo = 'Transporte'
+        break
+    }
+
+    linha.insertCell(1).innerHTML = d.tipo
+    linha.insertCell(2).innerHTML = d.descricao
+    linha.insertCell(3).innerHTML = d.valor
+  
+  
+  
+  })
+
 }
