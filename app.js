@@ -67,11 +67,52 @@ class Bd {
       despesas.push(despesa)
     }
     return despesas
+
   }
 
-  pesquisar(despesa) {
-    console.log(despesa)
-  }
+    pesquisar(despesa) {
+
+      let despesasFiltradas = Array()
+
+      despesasFiltradas = this.recuperarTodosRegistros()
+
+      
+      console.log(despesa)
+
+      console.log(despesasFiltradas)
+
+      if(despesa.ano != ' '){
+      console.log('filtro de ano: ')  
+      despesasFiltradas = despesasFiltradas.filter(d => d.ano == despesa.ano)
+      }
+
+      if(despesa.mes != ' '){
+        console.log('filtro do mes: ')
+        despesasFiltradas = despesasFiltradas.filter(d => d.mes == despesa.mes)
+        }
+
+      if(despesa.dia != ' '){
+        console.log('filtro de dia: ')
+          despesasFiltradas = despesasFiltradas.filter(d => d.dia == despesa.dia)
+        }
+      
+      if(despesa.tipo != ' '){
+        console.log('filtro de tipo: ')
+          despesasFiltradas = despesasFiltradas.filter(d => d.tipo == despesa.tipo)
+        }
+
+      if(despesa.descricao != ' '){
+        console.log('filtro de descrição: ')
+          despesasFiltradas = despesasFiltradas.filter(d => d.descricao == despesa.descricao)
+        }
+
+      if(despesa.valor != ' '){
+        console.log('filtro de valor: ')
+          despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor)
+        }
+
+      console.log(despesasFiltradas)
+    }
 
 
 
@@ -115,11 +156,6 @@ function cadastrardespesa(){
 
   }else {
 
-<<<<<<< HEAD
-  
-=======
-   
->>>>>>> 0ce34ead8f174bf2161ae86df2438222aa99e31d
 
 
 
@@ -169,7 +205,6 @@ function carregaListaDespesas() {
 }
 
 function pesquisarDespesa() {
-<<<<<<< HEAD
   let ano = document.getElementById('ano').value
   let mes = document.getElementById('mes').value
   let dia = document.getElementById('dia').value
@@ -177,18 +212,10 @@ function pesquisarDespesa() {
   let descricao = document.getElementById('descricao').value
   let valor = document.getElementById('valor').value
 
-=======
-    let ano = document.getElementById('ano').value
-    let mes = document.getElementById('mes').value
-    let dia = document.getElementById('dia').value
-    let tipo = document.getElementById('tipo').value
-    let descricao = document.getElementById('descricao').value
-    let valor = document.getElementById('valor').value
+  let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor)
 
+  bd.pesquisar(despesa)
 
-
-    let despesa = new Despesa(ano, mes, dia, tipo, descricao,  valor)
-
-    bd.pesquisar(despesa)
->>>>>>> 0ce34ead8f174bf2161ae86df2438222aa99e31d
 }
+
+
