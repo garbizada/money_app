@@ -92,10 +92,26 @@ function cadastrardespesa(){
   if(despesa.validarDados()){
     bd.gravar(despesa)
 
+    
+
+
     $('#sucessoGravacao').modal('show')
+
+    ano.value = ''
+    mes.value = ''
+    dia.value = ''
+    tipo.value = ''
+    descricao.value = ''
+    valor.value = ''
+    
+
 
 
   }else {
+
+  
+
+
 
     $('#erroGravacao').modal('show')
     
@@ -139,5 +155,15 @@ function carregaListaDespesas() {
   
   
   })
+
+}
+
+function pesquisarDespesa() {
+  let ano = document.getElementById('ano').value
+  let mes = document.getElementById('mes').value
+  let dia = document.getElementById('dia').value
+  let tipo = document.getElementById('tipo').value
+  let descricao = document.getElementById('descricao').value
+  let valor = document.getElementById('valor').value
 
 }
