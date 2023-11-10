@@ -64,57 +64,61 @@ class Bd {
         continue
       }
 
+      despesa.id = i
       despesas.push(despesa)
     }
     return despesas
 
   }
 
-    pesquisar(despesa) {
+  pesquisar(despesa) {
 
-      let despesasFiltradas = Array()
+    let despesasFiltradas = Array()
 
-      despesasFiltradas = this.recuperarTodosRegistros()
+    despesasFiltradas = this.recuperarTodosRegistros()
 
-      
-      console.log(despesa)
+    
+    console.log(despesa)
 
-      console.log(despesasFiltradas)
+    console.log(despesasFiltradas)
 
-      if(despesa.ano != ' '){
-      console.log('filtro de ano: ')  
-      despesasFiltradas = despesasFiltradas.filter(d => d.ano == despesa.ano)
-      }
-
-      if(despesa.mes != ' '){
-        console.log('filtro do mes: ')
-        despesasFiltradas = despesasFiltradas.filter(d => d.mes == despesa.mes)
-        }
-
-      if(despesa.dia != ' '){
-        console.log('filtro de dia: ')
-          despesasFiltradas = despesasFiltradas.filter(d => d.dia == despesa.dia)
-        }
-      
-      if(despesa.tipo != ' '){
-        console.log('filtro de tipo: ')
-          despesasFiltradas = despesasFiltradas.filter(d => d.tipo == despesa.tipo)
-        }
-
-      if(despesa.descricao != ' '){
-        console.log('filtro de descrição: ')
-          despesasFiltradas = despesasFiltradas.filter(d => d.descricao == despesa.descricao)
-        }
-
-      if(despesa.valor != ' '){
-        console.log('filtro de valor: ')
-          despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor)
-        }
-
-      console.log(despesasFiltradas)
+    if(despesa.ano != ''){
+       console.log('filtro de ano')
+       despesasFiltradas = despesasFiltradas.filter(d => d.ano == despesa.ano)
     }
 
+    if(despesa.mes != ''){
+      console.log('filtro de mes')
+      despesasFiltradas = despesasFiltradas.filter(d => d.mes == despesa.mes)
+    }
 
+    if(despesa.dia != ''){
+      console.log('filtro de dia')
+      despesasFiltradas = despesasFiltradas.filter(d => d.dia == despesa.dia)
+    }
+
+    if(despesa.tipo != ''){
+      console.log('filtro de tipo')
+      despesasFiltradas = despesasFiltradas.filter(d => d.tipo == despesa.tipo)
+    }
+
+    if(despesa.descricao != ''){
+      console.log('filtro de descrição')
+      despesasFiltradas = despesasFiltradas.filter(d => d.descricao == despesa.descricao)
+    }
+
+    if(despesa.valor != ''){
+      console.log('filtro de valor')
+      despesasFiltradas = despesasFiltradas.filter(d => d.valor == despesa.valor)
+    }
+  
+    return despesasFiltradas
+  }
+  
+
+  remover(id) {
+      localStorage.removeItem(id)
+  }
 
 }
 
@@ -165,14 +169,15 @@ function cadastrardespesa(){
   
 }
 
-function carregaListaDespesas() {
-  let despesas = Array()
+function carregaListaDespesas(despesas = Array(),filtro = false) {
+  
+  if(despesas.length == 0 && filtro == false){
+    despesas = bd.recuperarTodosRegistros()
+  }
 
-  despesas = bd.recuperarTodosRegistros()
+  let lista_consulta_d = document.getElementById('lista_consulta_d')
+  lista_consulta_d.innerHTML = ''
 
-  console.log(despesas)
-
-  let listaDespesas = document.getElementById('lista_consulta_d')
 
   despesas.forEach(function(d) {
 
@@ -198,8 +203,30 @@ function carregaListaDespesas() {
     linha.insertCell(2).innerHTML = d.descricao
     linha.insertCell(3).innerHTML = d.valor
   
-  
-  
+    
+    let btn = document.createElement("button")
+    btn.className = 'btn btn-danger'
+    btn.innerHTML = '<i class ="fas fa-times"></i>'
+    btn.id = `id_despesa_${d.id}`;
+    btn.onclick = function(){
+
+    
+
+     
+      let id = this.id.replace('id_despesa_', '')
+
+      //alert(id)
+
+      bd.remover(id)
+
+      window.location.reload()
+
+
+    }
+
+    linha.insertCell(4).append(btn)
+    
+    console.log(d)
   })
 
 }
@@ -213,9 +240,9 @@ function pesquisarDespesa() {
   let valor = document.getElementById('valor').value
 
   let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor)
+  let despesas = bd.pesquisar(despesa)
 
-  bd.pesquisar(despesa)
-
+  carregaListaDespesas(despesas, true)
 }
 
 
